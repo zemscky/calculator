@@ -1,0 +1,19 @@
+### Приветствие
+GET http://localhost:8080/calculator
+Content-Type: application/json
+
+### Сложение
+GET http://localhost:8080/calculator/plus?num1=5&num2=5
+Content-Type: application/json
+
+### Вычетание
+GET http://localhost:8080/calculator/minus?num1=5&num2=5
+Content-Type: application/json
+
+### Умножение
+GET http://localhost:8080/calculator/multiply?num1=5&num2=5
+Content-Type: application/json
+
+### Деление
+GET http://localhost:8080/calculator/divide?num2=5&num1=5
+Content-Type: application/json
