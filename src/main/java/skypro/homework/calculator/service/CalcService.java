@@ -31,5 +31,4 @@ public class CalcService {
         }
         return num1 / num2;
     }
-
 }

@@ -1,44 +1,55 @@
 package skypro.homework.calculator;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
 import skypro.homework.calculator.service.CalcService;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CalcTest {
-    Integer num1;
-    Integer num2;
 
-    @Test
-    public void getResultPlus() {
-        num1 = 5;
-        num2 = 10;
-        Integer expected = CalcService.plus(num1,num2);
-        assertNotNull(expected);
+    private static Stream<Arguments> provideParameters(){
+        return Stream.of(
+                Arguments.of(5, 10),
+                Arguments.of(5, 0));
     }
-    @Test
-    public void getResultMinus() {
-        num1 = 5;
-        num2 = 10;
-        Integer expected = CalcService.minus(num1,num2);
-        assertNotNull(expected);
+
+    @ParameterizedTest
+    @MethodSource(value = "provideParameters")
+    public void getResultPlus(Integer num1, Integer num2) {
+        int actual = CalcService.plus(num1,num2);
+        int expected = num1 + num2;
+        assertEquals(expected, actual);
     }
-    @Test
-    public void getResultMultiply() {
-        num1 = 5;
-        num2 = 10;
-        Integer expected = CalcService.multiply(num1,num2);
-        assertNotNull(expected);
+    @ParameterizedTest
+    @MethodSource(value = "provideParameters")
+    public void getResultMinus(Integer num1, Integer num2) {
+        int actual = CalcService.minus(num1,num2);
+        int expected = num1 - num2;
+        assertEquals(expected, actual);
     }
-    @Test
-    public void getResultDivide() {
-        num1 = 5;
-        num2 = 10;
-        if (num2 == 0) {
-            throw new IllegalArgumentException("Нельзя делить на ноль");
-        }
-        Integer expected = CalcService.divide(num1,num2);
-        assertNotNull(expected);
+    @ParameterizedTest
+    @MethodSource(value = "provideParameters")
+    public void getResultMultiply(Integer num1, Integer num2) {
+        int actual = CalcService.multiply(num1,num2);
+        int expected = num1 * num2;
+        assertEquals(expected, actual);
+
     }
+    @ParameterizedTest
+    @MethodSource(value = "provideParameters")
+    public void getResultDivide(Integer num1, Integer num2) {
+        Assertions.assertThrows(IllegalArgumentException.class, ()-> CalcService.divide(num1,0));
+        int actual = CalcService.divide(num1,num2);
+        int expected = num1 / num2;
+        assertEquals(expected, actual);
+    }
+
 }
